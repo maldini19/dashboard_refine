@@ -9,13 +9,16 @@ import {
 import KanbanColumn from "@/components/tasks/kanban/column";
 import KanbanItem from "@/components/tasks/kanban/item";
 import { TASK_STAGES_QUERY, TASKS_QUERY } from "@/graphql/queries";
-import { TaskStage } from "@/graphql/schema.types";
-import { TasksQuery } from "@/graphql/types";
-import ProjectCard, { ProjectCardMemo } from "@/components/tasks/kanban/card";
+
+import { TasksQuery, TaskStagesQuery } from "@/graphql/types";
+import { ProjectCardMemo } from "@/components/tasks/kanban/card";
 import { KanbanAddCardButton } from "@/components/tasks/kanban/add-card-button";
 import { KanbanColumnSkeleton, ProjectCardSkeleton } from "@/components";
 import { DragEndEvent } from "@dnd-kit/core";
 import { UPDATE_TASK_STAGE_MUTATION } from "@/graphql/mutations";
+
+type Task = GetFieldsFromList<TasksQuery>;
+type TaskStage = GetFieldsFromList<TaskStagesQuery> & { tasks: Task[] };
 
 const List = ({ children }: React.PropsWithChildren) => {
   const { replace } = useNavigation();
@@ -88,9 +91,9 @@ const List = ({ children }: React.PropsWithChildren) => {
     const path =
       args.stageId === "unassigned"
         ? "/tasks/new"
-        : `/tasks/new?stageId=${args.stageId}`
+        : `/tasks/new?stageId=${args.stageId}`;
 
-        replace(path);
+    replace(path);
   };
 
   const handleOnDragEnd = (event: DragEndEvent) => {
@@ -142,7 +145,7 @@ const List = ({ children }: React.PropsWithChildren) => {
                 id={task.id}
                 data={{ ...task, stageId: "unassigned" }}
               >
-                <ProjectCard {...task} dueDate={task.dueDate || undefined} />
+                <ProjectCardMemo {...task} dueDate={task.dueDate || undefined} />
               </KanbanItem>
             ))}
             {!taskStages.unassignedStage.length && (
