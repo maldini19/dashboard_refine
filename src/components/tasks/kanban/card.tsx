@@ -22,7 +22,7 @@ import {
   Tooltip,
 } from "antd";
 import dayjs from "dayjs";
-import React, { memo, useMemo } from "react";
+import { memo, useMemo } from "react";
 
 type ProjectCardProps = {
   id: string;
@@ -71,7 +71,7 @@ const ProjectCard = ({ id, title, dueDate, users }: ProjectCardProps) => {
     ];
 
     return dropdownItems;
-  }, []);
+  }, [edit, id, mutate]);
 
   const dueDateOptions = useMemo(() => {
     if (!dueDate) {

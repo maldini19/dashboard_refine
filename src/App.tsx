@@ -1,8 +1,8 @@
-import { Authenticated, GitHubBanner, Refine } from "@refinedev/core";
+import { Authenticated, Refine } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 
-import { Edit, useNotificationProvider } from "@refinedev/antd";
+import {  useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
 
 import { authProvider, dataProvider, liveProvider } from "./providers";
@@ -15,7 +15,7 @@ import routerBindings, {
 import { App as AntdApp } from "antd";
 import { BrowserRouter, Outlet, Route, Routes } from "react-router-dom";
 
-import { Home, ForgotPassword, Register, Login, CompanyList } from "./pages";
+import { Home, Login, CompanyList } from "./pages";
 
 import Layout from "./components/layout";
 import { resources } from "./config/resources";
@@ -48,8 +48,6 @@ function App() {
             >
               <Routes>
                 <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
                 <Route
                   element={
                     <Authenticated
